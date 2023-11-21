@@ -12,6 +12,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			contacts: [
+				{
+					full_name: "Leilani Tanimoto",
+					address: "basfjasjs",
+					phone: "5364545456",
+					email: "leilani@blabla.com",
+					
+				},
+				{
+					full_name: "Leilani Tanimoto",
+					address: "basfjasjs",
+					phone: "5364545456",
+					email: "leilani@blabla.com",
+				}
 			]
 		},
 		actions: {
@@ -19,6 +34,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			deleteContact: (indexToDelete) => {
+				const store = getStore();
+				console.log ("deleteContact")
+				console.log("eliminar" + indexToDelete) 
+				console.log (store.contacts.filter ( (item,index) => index!= indexToDelete))
+				setStore({ contacts: store.contacts.filter ( (item,index) => index!= indexToDelete) });
+			},
+
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))

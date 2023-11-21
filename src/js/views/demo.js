@@ -8,6 +8,11 @@ import "../../styles/demo.css";
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
 
+	function eliminar (indexToDelete){
+		console.log("eliminar" + indexToDelete) 
+		console.log (store.contacts.filter ( (item,index) => index!= indexToDelete))
+	}
+
 	return (
 		<div className="container">
 			<ul className="list-group">
@@ -30,6 +35,21 @@ export const Demo = () => {
 							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
 								Change Color
 							</button>
+						</li>
+					);
+				})}
+				{store.contacts.map((item, index) => {
+					return (
+						<li
+							key={index}
+							className="list-group-item d-flex justify-content-between"
+							>
+								{ item.full_name }
+								{ item.address }
+								{ item.phone }
+								{ item.email }
+						<button onClick={() => actions.deleteContact(index)}>Eliminar</button>
+						
 						</li>
 					);
 				})}
