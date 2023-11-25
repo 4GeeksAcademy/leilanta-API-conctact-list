@@ -14,19 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			contacts: [
-				{
-					full_name: "Leilani Tanimoto",
-					address: "basfjasjs",
-					phone: "5364545456",
-					email: "leilani@blabla.com",
-					
-				},
-				{
-					full_name: "Leilani Tanimoto",
-					address: "basfjasjs",
-					phone: "5364545456",
-					email: "leilani@blabla.com",
-				}
+			
 			]
 		},
 		actions: {
@@ -37,31 +25,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			deleteContact: (indexToDelete) => {
 				const store = getStore();
-				console.log ("deleteContact")
-				console.log("eliminar" + indexToDelete) 
-				console.log (store.contacts.filter ( (item,index) => index!= indexToDelete))
+				// console.log ("deleteContact")
+				// console.log("eliminar" + indexToDelete) 
+				// console.log (store.contacts.filter ( (item,index) => index!= indexToDelete))
 				setStore({ contacts: store.contacts.filter ( (item,index) => index!= indexToDelete) });
+
+				var requestOptions = {
+					method: 'DELETE',
+					redirect: 'follow'
+				  };
+				  
+				  fetch("https://playground.4geeks.com/apis/fake/contact/" + indexToDelete, requestOptions)
+					.then(response => response.text())
+					.then(result => {
+						//console.log(result)
+						fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/whatever")
+						.then ( (response) => response.json())
+						.then ( (data)=> setStore ({ contacts: data }))})
+						.catch(error => console.log('error', error));
 			},
 
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
+				fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/whatever")
+				.then ( (response) => response.json())
+				.then ( (data)=> setStore ({ contacts: data }))
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+		
 		}
 	};
 };
